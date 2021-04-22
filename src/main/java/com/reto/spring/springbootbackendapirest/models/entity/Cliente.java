@@ -10,26 +10,32 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 
 import java.io.Serializable; 
 
 
-@Entity
-@Table(name="clientes")
+@Entity   //clase entity de JP
+@Table(name="clientes") //indicar el nombre de la tabla
 public class Cliente implements Serializable{
 
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id //etiqueta que indica que corresponde a la llave primaria
+	@GeneratedValue(strategy=GenerationType.IDENTITY) //de forma incremental
 	private Long id;
 	
 	private String nombre;
 	private String apellido;
 	private String email;
 	
-	@Column(name="create_at")
-	@Temporal(TemporalType.DATE)
+	@Column(name="create_at") //cuando el nombre del atributo es diferente al nombre del campo
+	@Temporal(TemporalType.DATE) //transformacion o tipo equivalente en la base de datos fecha de java a sql
 	private Date creatAt;
+	
+	@PrePersist  //evento del ciclo de vida de las clases entity que crea la fecha de foram automatica
+	public void prePersist() {
+		creatAt = new Date();
+	}
 
 	public Long getId() {
 		return id;
