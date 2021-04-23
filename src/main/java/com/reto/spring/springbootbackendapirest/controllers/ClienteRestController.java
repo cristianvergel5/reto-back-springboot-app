@@ -1,5 +1,6 @@
 package com.reto.spring.springbootbackendapirest.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,54 +20,47 @@ import com.reto.spring.springbootbackendapirest.models.entity.Cliente;
 import com.reto.spring.springbootbackendapirest.models.services.IClienteService;
 
 
-@CrossOrigin(origins= {"http://localhost:4200"}) //se da acceso a el dominio para enviar y recibir datos
-@RestController //  indica que es un apirest
-@RequestMapping("/api") //Importar | mapear
+@CrossOrigin(origins = { "http://localhost:4200" })
+@RestController
+@RequestMapping("/api")
 public class ClienteRestController {
-	
+
 	@Autowired
 	private IClienteService clienteService;
-	
-	
-	// Implementacion de Listar clientes
-	@GetMapping("/clientes") //peticion tipo get endpoint para responder a las peticiones
-	//metodo para listar los clientes
-	public List<Cliente> index(){
+
+	@GetMapping("/clientes")
+	public List<Cliente> index() {
 		return clienteService.findAll();
 	}
-	
-	
-	//implementacion buscar por ID
+
 	@GetMapping("/clientes/{id}")
-	public Cliente show(@PathVariable Long id){  // anotacion pathv porque se esta pasando por id
-		return clienteService.findById(id);
+	public Cliente show(@PathVariable Long id) {
+		return this.clienteService.findById(id);
 	}
-	
-	
-	//Crear 
+
 	@PostMapping("/clientes")
-	@ResponseStatus(code = HttpStatus.CREATED) //si es correcto el create da respuesta ok retorna 201
-	public Cliente create(@RequestBody Cliente cliente){  //RequestBody dado que vienen en formato json se indica que es REBody, se transforman los datos 
-		return clienteService.save(cliente);
+	@ResponseStatus(HttpStatus.CREATED)
+	public Cliente create(@RequestBody Cliente cliente) {
+		cliente.setCreateAt(new Date());
+		this.clienteService.save(cliente);
+		return cliente;
 	}
-	
-	//Actualizar 
+
 	@PutMapping("/clientes/{id}")
-	@ResponseStatus(code = HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.CREATED)
 	public Cliente update(@RequestBody Cliente cliente, @PathVariable Long id) {
-		Cliente clienteActual = this.clienteService.findById(id);
-		
-		clienteActual.setApellido(cliente.getApellido());;
-		clienteActual.setNombre(cliente.getNombre());
-		clienteActual.setEmail(cliente.getEmail());
-		
-		return clienteService.save(clienteActual);
+		Cliente currentCliente = this.clienteService.findById(id);
+		currentCliente.setNombre(cliente.getNombre());
+		currentCliente.setApellido(cliente.getApellido());
+		currentCliente.setEmail(cliente.getEmail());
+		this.clienteService.save(currentCliente);
+		return currentCliente;
 	}
-	
+
 	@DeleteMapping("/clientes/{id}")
-	@ResponseStatus(code = HttpStatus.NO_CONTENT) //retorna 204 si la se elimino correctamente
-	public void detele(@PathVariable Long id) {
-		this.clienteService.findById(id);
-		clienteService.delete(id);
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable Long id) {
+		Cliente currentCliente = this.clienteService.findById(id);
+		this.clienteService.delete(currentCliente);
 	}
 }

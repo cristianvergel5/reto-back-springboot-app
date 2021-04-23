@@ -6,42 +6,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import com.reto.spring.springbootbackendapirest.models.dao.IClienteDao;
 import com.reto.spring.springbootbackendapirest.models.entity.Cliente;
 
 
-@Service //marca la clase como un componente de servicio, queda almacenado contenedor de spring 
+@Service
 public class ClienteServiceImpl implements IClienteService{
-	
-	@Autowired //inyectar el cliente DAO, (dependencias)
+
+	@Autowired
 	private IClienteDao clienteDao;
 	
 	@Override
 	@Transactional(readOnly = true)
 	public List<Cliente> findAll() {
-		return (List<Cliente>) clienteDao.findAll(); //retorna un iterable, se hace el cast para convertirlo a list
+		return (List<Cliente>) clienteDao.findAll();
+	}
+
+	@Override
+	@Transactional
+	public void save(Cliente cliente) {
+		clienteDao.save(cliente);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Cliente findById(Long id) {
-		// TODO Auto-generated method stub
 		return clienteDao.findById(id).orElse(null);
 	}
 
 	@Override
-	public Cliente save(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return clienteDao.save(cliente);
+	@Transactional
+	public void delete(Cliente cliente) {
+		clienteDao.delete(cliente);
+		
 	}
-	
-	
-	@Transactional(readOnly = true)
-	@Override
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		clienteDao.deleteById(id);
-	}
-	
 
 }
