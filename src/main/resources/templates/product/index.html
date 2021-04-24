@@ -23,8 +23,8 @@
 			<td>
 				<img th:src="${product.photo}" width="120">
 			</td>			
-			<td th:text="${product.price}"> </td>
-			<td th:text="${product.shippingCost}"> </td>
+			<td th:text="${'$' +  product.price}"> </td>
+			<td th:text="${'$' + product.shippingCost}"> </td>
 			<td>
 				<a th:href="${ '/cart/buy/' + product.id}"> Compra ahora</a>
 			</td>
