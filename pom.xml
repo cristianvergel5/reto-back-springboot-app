@@ -8,11 +8,11 @@
 		<version>2.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.reto.spring.spring-boot-backend-apirest</groupId>
-	<artifactId>spring-boot-backend-apirest</artifactId>
+	<groupId>com.example</groupId>
+	<artifactId>prueba-backend-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-backend-apirest</name>
-	<description>Demo project for Spring Boot</description>
+	<name>realizando-prueba-backend-spring</name>
+	<description>Project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -23,15 +23,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

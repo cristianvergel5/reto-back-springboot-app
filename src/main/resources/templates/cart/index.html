@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<h3> Informacion del carrito</h3>
+	
+	<form method="post" th:action="${'/cart/update'}">
+		<table border="1">
+			<tr>
+				<th>Opciones</th>
+				<th>Id</th>
+				<th>Nombre</th>
+				<th>Descripcion</th>
+				<th>Foto</th>
+				<th>Precio</th>
+				<th>
+					Cantidad
+					<input type="submit" value="Update" />
+				</th>
+				<th>Sub Total</th>
+			</tr>
+			<tr th:each="item : ${session.cart}">
+				<td align="center">
+					<a th:href="${ '/cart/remove/' + item.product.id}"> X </a> 
+				</td>
+				
+				<td th:text="${item.product.id}"> </td>
+				<td th:text="${item.product.name}"> </td>
+				<td th:text="${item.product.description}"> </td>
+					<td>
+					<img th:src="${item.product.photo}" width="120">
+				</td>
+				<td th:text="${item.product.price}"> </td>
+				<td>
+					<input type="number" th:value="${item.quantity}" name="queantity" style="width: 50px"/>
+				 </td>
+				<td th:text="${item.product.price * item.quantity}"> </td>
+				
+			
+			</tr>
+		</table>
+	</form>
+	<br/>
+		<a th:href="${ '/product'}"> continue comprando</a>
+
+</body>
+</html>
